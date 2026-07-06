@@ -1,17 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: httpd-app
+  name: database
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/sp-tnex/argoCD.git
     targetRevision: HEAD
-    path: practice/httpd
+    path: apps/database
   destination:
     server: https://kubernetes.default.svc
-    namespace: httpd
+    namespace: gitops-demo
   syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
